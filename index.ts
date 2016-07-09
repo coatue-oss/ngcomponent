@@ -1,9 +1,13 @@
 import {assign, mapValues, some} from 'lodash'
 
-abstract class Component<Props, State> {
+abstract class NgComponent<Props, State> {
+
+  private __isFirstRender = true
 
   protected state: State = undefined
   protected props: Props = undefined
+
+  protected abstract render(props: Props, state: State): void
 
   /*
     eg. {
@@ -15,6 +19,11 @@ abstract class Component<Props, State> {
   public $onChanges(changes: {}) {
     const oldProps = mapValues<{}, Props>(changes, 'previousValue')
     const newProps = mapValues<{}, Props>(changes, 'currentValue')
+
+    if (!this.__isFirstRender) {
+      this.componentWillReceiveProps(newProps)
+    }
+
     if (this.didPropsChange(newProps, oldProps)) {
 
       // compute whether we should render or not
@@ -27,20 +36,52 @@ abstract class Component<Props, State> {
       this.props = assign({}, this.props, newProps)
 
       if (shouldUpdate) {
+
+        if (!this.__isFirstRender) {
+          this.componentWillUpdate(this.props, this.state)
+        }
+
         this.render(this.props, this.state)
+
+        if (!this.__isFirstRender) {
+          this.componentDidUpdate(this.props, this.state)
+        }
+
+        this.__isFirstRender = false
       }
     }
+  }
+
+  $onInit() {
+    this.componentWillMount()
+  }
+
+  $postLink() {
+    this.componentDidMount()
+  }
+
+  $onDestroy() {
+    this.componentWillUnmount()
   }
 
   protected didPropsChange(newProps: Props, oldProps: Props): boolean {
     return some(newProps, (v, k) => v !== oldProps[k])
   }
 
+  /*
+    lifecycle hooks
+  */
+
   protected shouldComponentUpdate(newProps: Props, oldProps: Props): boolean {
     return true
   }
 
-  protected abstract render(props: Props, state: State): void
+  protected componentWillMount() {}
+  protected componentDidMount() {}
+  protected componentWillReceiveProps(props: Props) {}
+  protected componentDidUpdate(props: Props, state: State) {}
+  protected componentWillUpdate(props: Props, state: State) {}
+  protected componentWillUnmount() {}
 }
 
-export default Component
+export default NgComponent

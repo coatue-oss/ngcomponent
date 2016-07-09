@@ -1,4 +1,5 @@
 import {mock} from 'angular'
+import {$compile, $rootScope} from 'ngimport'
 import NgComponent from './'
 
 describe('Component', function() {
@@ -8,9 +9,6 @@ describe('Component', function() {
     b: string
   }
 
-  beforeEach(function() {
-    mock.module('coatue')
-  })
   describe('#$onChanges', function() {
     it('should call #render if any prop has changed', function() {
       class A extends NgComponent<Props, {}> {
@@ -74,10 +72,30 @@ describe('Component', function() {
   })
 
   describe('#shouldComponentUpdate', function() {
+    it('should not get called on the initial render', function() {
+      class A extends NgComponent<Props, {}> {
+        render() {}
+      }
+      const spy = spyOn(A.prototype, 'shouldComponentUpdate')
+      const a = new A
+      expect(spy).not.toHaveBeenCalled()
+    })
+    it('should get called on subsequent renders', function() {
+      class A extends NgComponent<Props, {}> {
+        render() {}
+      }
+      const spy = spyOn(A.prototype, 'shouldComponentUpdate')
+      const a = new A
+      a.$onChanges({
+        a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
+        b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
+      })
+      expect(spy).toHaveBeenCalledWith({a: 42, b: 'foo'}, {a: 10, b: undefined})
+    })
     it('should accept a custom comparator', function() {
       class A extends NgComponent<Props, {}> {
         render() {}
-        protected shouldComponentUpdate(newProps: Props, oldProps: Props): boolean {
+        shouldComponentUpdate(newProps: Props, oldProps: Props): boolean {
           return newProps.a > oldProps.a
         }
       }
@@ -108,6 +126,33 @@ describe('Component', function() {
       expect(spy.calls.count()).toBe(2)
       expect(spy.calls.mostRecent().args[0])
         .toEqual({ a: 31, b: 'bar' })
+    })
+  })
+  describe('#componentWillMount', function() {
+    it('should get called when the component mounts', function() {
+
+      class A extends NgComponent<Props, {}> {
+        render() {}
+        shouldComponentUpdate(newProps: Props, oldProps: Props): boolean {
+          return newProps.a > oldProps.a
+        }
+      }
+      const spy = spyOn(A.prototype, 'componentWillMount')
+
+      const component: angular.IComponentOptions = {
+        bindings: {
+          a: '<',
+          b: '<'
+        },
+        controller: A
+      }
+
+      angular.module('test', []).component('component', component)
+      angular.bootstrap(angular.element(), ['test'])
+
+
+      const a = new A
+      expect(spy).toHaveBeenCalledWith()
     })
   })
 })
