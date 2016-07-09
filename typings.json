@@ -1,0 +1,11 @@
+{
+  "globalDependencies": {
+    "angular": "registry:dt/angular#1.5.0+20160627105203",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#ea054545eeb61cf7019133a3398d5e79cd5745ce"
+  },
+  "dependencies": {},
+  "globalDevDependencies": {
+    "angular-mocks": "registry:dt/angular-mocks#1.5.0+20160608104721",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255"
+  }
+}
