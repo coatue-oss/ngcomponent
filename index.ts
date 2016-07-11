@@ -71,16 +71,12 @@ abstract class NgComponent<Props, State> {
   /*
     lifecycle hooks
   */
-
-  protected shouldComponentUpdate(newProps: Props, oldProps: Props): boolean {
-    return true
-  }
-
   protected componentWillMount() {}
   protected componentDidMount() {}
-  protected componentWillReceiveProps(props: Props) {}
-  protected componentDidUpdate(props: Props, state: State) {}
+  protected componentWillReceiveProps(props: Props) { }
+  protected shouldComponentUpdate(newProps: Props, oldProps: Props): boolean { return true }
   protected componentWillUpdate(props: Props, state: State) {}
+  protected componentDidUpdate(props: Props, state: State) {}
   protected componentWillUnmount() {}
 }
 

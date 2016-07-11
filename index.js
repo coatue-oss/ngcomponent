@@ -51,14 +51,12 @@ class NgComponent {
     /*
       lifecycle hooks
     */
-    shouldComponentUpdate(newProps, oldProps) {
-        return true;
-    }
     componentWillMount() { }
     componentDidMount() { }
     componentWillReceiveProps(props) { }
-    componentDidUpdate(props, state) { }
+    shouldComponentUpdate(newProps, oldProps) { return true; }
     componentWillUpdate(props, state) { }
+    componentDidUpdate(props, state) { }
     componentWillUnmount() { }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
