@@ -1,10 +1,10 @@
-# NgComponent [![Build Status][build]](https://circleci.com/gh/bcherny/ngcomponent) [![npm]](https://www.npmjs.com/package/ngcomponent) [![mit]](https://opensource.org/licenses/MIT)
+# NgComponent [![Build Status][build]](https://circleci.com/gh/coatue/ngcomponent) [![npm]](https://www.npmjs.com/package/ngcomponent) [![mit]](https://opensource.org/licenses/MIT)
 
-[build]: https://img.shields.io/circleci/project/bcherny/ngcomponent.svg?branch=master&style=flat-square
+[build]: https://img.shields.io/circleci/project/coatue/ngcomponent.svg?branch=master&style=flat-square
 [npm]: https://img.shields.io/npm/v/ngcomponent.svg?style=flat-square
 [mit]: https://img.shields.io/npm/l/ngcomponent.svg?style=flat-square
 
-> Angular components with React-style APIs
+> A clean React-like abstraction for rendering non-Angular components within an Angular app.
 
 ## Installation
 
@@ -13,6 +13,8 @@ npm install --save ngcomponent
 ```
 
 ## Usage
+
+*Note: This example is in TypeScript, but it works just as well in vanilla JavaScript*
 
 ```ts
 import {IComponentOptions} from 'angular'
@@ -39,7 +41,59 @@ const myComponent: IComponentOptions = {
 }
 ```
 
-## Full Usage Example
+## Full Example
+
+```ts
+
+interface Props {
+  data: number[]
+  type: "bar"|"line"
+}
+
+interface State {
+  chart: Chart
+}
+
+const chartJSWrapper: IComponentOptions = {
+  bindings: {
+    data: '<',
+    type: '<
+  },
+  template: `<canvas></canvas>`,
+  constructor(private $element: JQuery){}
+  controller: class extends NgComponent<Props, State> {
+
+    componentDidMount() {
+      this.state.chart = new Chart($element.find('canvas'), {
+        data: props.data,
+        type: props.type
+      })
+    }
+
+    render(props: Props, state: State) {
+      state.chart.data = props.data
+      state.chart.type = props.type
+      state.chart.update()
+    }
+
+    componentWillUnmount() {
+      this.state.chart.destroy()
+    }
+  }
+}
+```
+
+## Lifecycle Hooks
+
+NgComponent has a React-like component lifecycle API:
+
+- `componentWillMount()`
+- `componentDidMount()`
+- `componentWillReceiveProps(props)`
+- `shouldComponentUpdate(props, state)`
+- `componentWillUpdate(props, state)`
+- `componentDidUpdate(props, state)`
+- `componentWillUnmount()`
 
 ## Running the Tests
 
