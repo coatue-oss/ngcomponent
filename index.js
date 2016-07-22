@@ -1,7 +1,7 @@
 "use strict";
-const lodash_1 = require('lodash');
-class NgComponent {
-    constructor() {
+var lodash_1 = require('lodash');
+var NgComponent = (function () {
+    function NgComponent() {
         this.__isFirstRender = true;
         this.state = undefined;
         this.props = undefined;
@@ -13,15 +13,15 @@ class NgComponent {
       }
     */
     // nb: this method is explicity exposed for unit testing
-    $onChanges(changes) {
-        const oldProps = lodash_1.mapValues(changes, 'previousValue');
-        const newProps = lodash_1.mapValues(changes, 'currentValue');
+    NgComponent.prototype.$onChanges = function (changes) {
+        var oldProps = lodash_1.mapValues(changes, 'previousValue');
+        var newProps = lodash_1.mapValues(changes, 'currentValue');
         if (!this.__isFirstRender) {
             this.componentWillReceiveProps(newProps);
         }
         if (this.didPropsChange(newProps, oldProps)) {
             // compute whether we should render or not
-            const shouldUpdate = this.shouldComponentUpdate(lodash_1.assign({}, this.props, newProps), lodash_1.assign({}, this.props, oldProps));
+            var shouldUpdate = this.shouldComponentUpdate(lodash_1.assign({}, this.props, newProps), lodash_1.assign({}, this.props, oldProps));
             // store the new props
             this.props = lodash_1.assign({}, this.props, newProps);
             if (shouldUpdate) {
@@ -35,29 +35,30 @@ class NgComponent {
                 this.__isFirstRender = false;
             }
         }
-    }
-    $onInit() {
+    };
+    NgComponent.prototype.$onInit = function () {
         this.componentWillMount();
-    }
-    $postLink() {
+    };
+    NgComponent.prototype.$postLink = function () {
         this.componentDidMount();
-    }
-    $onDestroy() {
+    };
+    NgComponent.prototype.$onDestroy = function () {
         this.componentWillUnmount();
-    }
-    didPropsChange(newProps, oldProps) {
-        return lodash_1.some(newProps, (v, k) => v !== oldProps[k]);
-    }
+    };
+    NgComponent.prototype.didPropsChange = function (newProps, oldProps) {
+        return lodash_1.some(newProps, function (v, k) { return v !== oldProps[k]; });
+    };
     /*
       lifecycle hooks
     */
-    componentWillMount() { }
-    componentDidMount() { }
-    componentWillReceiveProps(props) { }
-    shouldComponentUpdate(newProps, oldProps) { return true; }
-    componentWillUpdate(props, state) { }
-    componentDidUpdate(props, state) { }
-    componentWillUnmount() { }
-}
+    NgComponent.prototype.componentWillMount = function () { };
+    NgComponent.prototype.componentDidMount = function () { };
+    NgComponent.prototype.componentWillReceiveProps = function (props) { };
+    NgComponent.prototype.shouldComponentUpdate = function (newProps, oldProps) { return true; };
+    NgComponent.prototype.componentWillUpdate = function (props, state) { };
+    NgComponent.prototype.componentDidUpdate = function (props, state) { };
+    NgComponent.prototype.componentWillUnmount = function () { };
+    return NgComponent;
+}());
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = NgComponent;

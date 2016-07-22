@@ -1,12 +1,12 @@
 {
   "name": "ngcomponent",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
   "main": "index.js",
   "main:esnext": "index.es2015.js",
   "typings": "index.d.ts",
   "scripts": {
-    "build": "tsc -d -m es2015 --outDir .; mv ./index.js ./index.es2015.js; tsc -m commonjs --outDir .;",
+    "build": "tsc -d -m es2015 --outDir .; mv ./index.js ./index.es2015.js; tsc -m commonjs -t es5  --outDir .;",
     "postinstall": "typings install",
     "tdd": "npm run watch & karma start",
     "test": "karma start --log-level debug --single-run",
