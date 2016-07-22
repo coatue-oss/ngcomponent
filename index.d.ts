@@ -2,7 +2,7 @@ declare abstract class NgComponent<Props, State> {
     private __isFirstRender;
     protected state: State;
     props: Props;
-    protected abstract render(props: Props, state: State): void;
+    abstract render(props: Props, state: State): void;
     $onChanges(changes: {}): void;
     $onInit(): void;
     $postLink(): void;

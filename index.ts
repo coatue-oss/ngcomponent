@@ -7,7 +7,7 @@ abstract class NgComponent<Props, State> {
   protected state: State = undefined
   public props: Props = undefined
 
-  protected abstract render(props: Props, state: State): void
+  abstract render(props: Props, state: State): void
 
   /*
     eg. {
