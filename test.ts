@@ -191,7 +191,7 @@ describe('Component', () => {
         const {parentScope, scope} = renderComponent(A)
         const spy = spyOn(scope.$ctrl, 'componentWillUpdate')
         parentScope.$apply(() => parentScope.a = 20)
-        expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' }, undefined)
+        expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' }, {})
       })
     })
 
@@ -212,7 +212,7 @@ describe('Component', () => {
         const {parentScope, scope} = renderComponent(A)
         const spy = spyOn(scope.$ctrl, 'componentDidUpdate')
         parentScope.$apply(() => parentScope.a = 20)
-        expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' }, undefined)
+        expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' }, {})
       })
     })
 

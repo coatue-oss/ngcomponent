@@ -3,8 +3,8 @@ var lodash_1 = require('lodash');
 var NgComponent = (function () {
     function NgComponent() {
         this.__isFirstRender = true;
-        this.state = undefined;
-        this.props = undefined;
+        this.state = {};
+        this.props = {};
     }
     /*
       eg. {

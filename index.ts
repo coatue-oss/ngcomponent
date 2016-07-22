@@ -4,8 +4,8 @@ abstract class NgComponent<Props, State> {
 
   private __isFirstRender = true
 
-  protected state: State = undefined
-  public props: Props = undefined
+  protected state: State = {} as State
+  public props: Props = {} as Props
 
   abstract render(props: Props, state: State): void
 

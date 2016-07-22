@@ -2,8 +2,8 @@ import { assign, mapValues, some } from 'lodash';
 class NgComponent {
     constructor() {
         this.__isFirstRender = true;
-        this.state = undefined;
-        this.props = undefined;
+        this.state = {};
+        this.props = {};
     }
     /*
       eg. {
