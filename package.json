@@ -1,13 +1,12 @@
 {
   "name": "ngcomponent",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
   "main": "index.js",
   "main:esnext": "index.es2015.js",
   "typings": "index.d.ts",
   "scripts": {
-    "build": "tsc -d -m es2015 --outDir .; mv ./index.js ./index.es2015.js; tsc -m commonjs -t es5  --outDir .;",
-    "postinstall": "typings install",
+    "build": "rm ./index.d.ts && tsc -d -m es2015 --outDir . && mv ./index.js ./index.es2015.js && tsc -m commonjs -t es5  --outDir .",
     "tdd": "npm run watch & karma start",
     "test": "karma start --single-run",
     "watch": "tsc -w"
@@ -32,6 +31,8 @@
   },
   "homepage": "https://github.com/bcherny/ngcomponent#readme",
   "devDependencies": {
+    "@types/angular-mocks": "^1.5.5",
+    "@types/jasmine": "^2.2.34",
     "browserify": "^13.0.1",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
@@ -43,11 +44,12 @@
     "karma-source-map-support": "^1.1.0",
     "ngimport": "^0.2.2",
     "rollupify": "^0.3.2",
-    "typescript": "^1.8.10",
-    "typings": "^1.3.1",
+    "typescript": "^2.0.3",
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "@types/angular": "^1.5.15",
+    "@types/lodash": "^4.14.36",
     "angular": "^1.5.7",
     "lodash": "^4.13.1",
     "ngimport": "0.0.7"

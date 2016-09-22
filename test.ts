@@ -1,4 +1,4 @@
-import {IComponentController, IScope, element, mock} from 'angular'
+import {IComponentController, IScope, bootstrap, element, mock, module} from 'angular'
 import {$compile, $rootScope} from 'ngimport'
 import NgComponent from './'
 
@@ -241,8 +241,7 @@ interface Scope extends IScope {
 }
 
 function renderComponent(controller: IComponentController) {
-  angular
-    .module('test', ['bcherny/ngimport'])
+  module('test', ['bcherny/ngimport'])
     .component('myComponent', {
       bindings: {
         a: '<',
@@ -252,8 +251,7 @@ function renderComponent(controller: IComponentController) {
       template: `{{a}}`
     })
 
-  angular
-    .bootstrap(element(), ['test'])
+  bootstrap(element(), ['test'])
 
   const el = element('<my-component a="a" b="b"></my-component>')
   const parentScope = Object.assign($rootScope.$new(true), {
@@ -262,7 +260,7 @@ function renderComponent(controller: IComponentController) {
   })
   $compile(el)(parentScope)
   parentScope.$apply()
-  const scope: Scope = el.isolateScope()
+  const scope = el.isolateScope() as Scope
   return {
     parentScope,
     scope

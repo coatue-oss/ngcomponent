@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["dom", "es2015"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
@@ -9,7 +10,6 @@
     "target": "es6"
   },
   "files": [
-    "./typings/index.d.ts",
     "./index.ts",
     "./test.ts"
   ]
