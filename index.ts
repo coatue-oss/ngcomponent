@@ -24,7 +24,7 @@ abstract class NgComponent<Props, State> {
       this.componentWillReceiveProps(newProps)
     }
 
-    if (this.didPropsChange(newProps, oldProps)) {
+    if (this.__isFirstRender || this.didPropsChange(newProps, oldProps)) {
 
       // compute whether we should render or not
       const shouldUpdate = this.shouldComponentUpdate(
