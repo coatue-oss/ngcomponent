@@ -18,7 +18,7 @@ npm install --save ngcomponent
 
 ```ts
 import {IComponentOptions} from 'angular'
-import NgComponent from 'ngcomponent
+import NgComponent from 'ngcomponent'
 
 interface Props {
   foo: number
@@ -30,7 +30,7 @@ interface State {}
 const myComponent: IComponentOptions = {
   bindings: {
     foo: '<',
-    bar: '<
+    bar: '<'
   },
   template: `
     <div></div>
