@@ -57,7 +57,7 @@ interface State {
 const chartJSWrapper: IComponentOptions = {
   bindings: {
     data: '<',
-    type: '<
+    type: '<'
   },
   template: `<canvas></canvas>`,
   constructor(private $element: JQuery){}
