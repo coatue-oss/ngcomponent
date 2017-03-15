@@ -8,12 +8,12 @@ declare abstract class NgComponent<Props, State> {
     $postLink(): void;
     $onDestroy(): void;
     protected didPropsChange(newProps: Props, oldProps: Props): boolean;
-    protected componentWillMount(): void;
-    protected componentDidMount(): void;
-    protected componentWillReceiveProps(props: Props): void;
-    protected shouldComponentUpdate(newProps: Props, oldProps: Props): boolean;
-    protected componentWillUpdate(props: Props, state: State): void;
-    protected componentDidUpdate(props: Props, state: State): void;
-    protected componentWillUnmount(): void;
+    componentWillMount(): void;
+    componentDidMount(): void;
+    componentWillReceiveProps(props: Props): void;
+    shouldComponentUpdate(newProps: Props, oldProps: Props): boolean;
+    componentWillUpdate(props: Props, state: State): void;
+    componentDidUpdate(props: Props, state: State): void;
+    componentWillUnmount(): void;
 }
 export default NgComponent;

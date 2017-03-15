@@ -1,4 +1,4 @@
-import {IComponentController, IScope, bootstrap, element, mock, module} from 'angular'
+import { bootstrap, element, IControllerConstructor, Injectable, IScope, module } from 'angular'
 import {$compile, $rootScope} from 'ngimport'
 import NgComponent from './'
 
@@ -240,7 +240,7 @@ interface Scope extends IScope {
   $ctrl: NgComponent<Props, void>
 }
 
-function renderComponent(controller: IComponentController) {
+function renderComponent(controller: Injectable<IControllerConstructor>) {
   module('test', ['bcherny/ngimport'])
     .component('myComponent', {
       bindings: {

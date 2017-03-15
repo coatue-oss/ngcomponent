@@ -18,7 +18,7 @@ class NgComponent {
         if (!this.__isFirstRender) {
             this.componentWillReceiveProps(newProps);
         }
-        if (this.didPropsChange(newProps, oldProps)) {
+        if (this.__isFirstRender || this.didPropsChange(newProps, oldProps)) {
             // compute whether we should render or not
             const shouldUpdate = this.shouldComponentUpdate(assign({}, this.props, newProps), assign({}, this.props, oldProps));
             // store the new props

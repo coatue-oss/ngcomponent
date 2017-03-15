@@ -1,5 +1,6 @@
 "use strict";
-var lodash_1 = require('lodash');
+Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = require("lodash");
 var NgComponent = (function () {
     function NgComponent() {
         this.__isFirstRender = true;
@@ -19,7 +20,7 @@ var NgComponent = (function () {
         if (!this.__isFirstRender) {
             this.componentWillReceiveProps(newProps);
         }
-        if (this.didPropsChange(newProps, oldProps)) {
+        if (this.__isFirstRender || this.didPropsChange(newProps, oldProps)) {
             // compute whether we should render or not
             var shouldUpdate = this.shouldComponentUpdate(lodash_1.assign({}, this.props, newProps), lodash_1.assign({}, this.props, oldProps));
             // store the new props
@@ -60,5 +61,4 @@ var NgComponent = (function () {
     NgComponent.prototype.componentWillUnmount = function () { };
     return NgComponent;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = NgComponent;
