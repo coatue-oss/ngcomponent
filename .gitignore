@@ -2,5 +2,7 @@
 node_modules/
 npm-debug.log
 typings/
-test.d.ts
+*.d.ts
+index*.js
 test.js
+*.map
