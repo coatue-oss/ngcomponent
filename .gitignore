@@ -3,6 +3,6 @@ node_modules/
 npm-debug.log
 typings/
 *.d.ts
-index*.js
-test.js
+*.js
+!karma.conf.js
 *.map

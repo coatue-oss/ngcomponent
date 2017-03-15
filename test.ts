@@ -22,30 +22,26 @@ describe('Component', () => {
         a: {currentValue: 42, previousValue: undefined, isFirstChange: () => true},
         b: {currentValue: undefined, previousValue: undefined, isFirstChange: () => true}
       })
-      expect(spy.calls.mostRecent().args[0])
-        .toEqual({ a: 42, b: undefined })
+      expect(a.props).toEqual({ a: 42, b: undefined })
 
       // call #2
       a.$onChanges({
         a: {currentValue: 60, previousValue: 42, isFirstChange: () => false},
         b: {currentValue: 'foo', previousValue: undefined, isFirstChange: () => false}
       })
-      expect(spy.calls.mostRecent().args[0])
-        .toEqual({ a: 60, b: 'foo' })
+      expect(a.props).toEqual({ a: 60, b: 'foo' })
 
       // call #3
       a.$onChanges({
         b: {currentValue: 'bar', previousValue: 'foo', isFirstChange: () => false}
       })
-      expect(spy.calls.mostRecent().args[0])
-        .toEqual({ a: 60, b: 'bar' })
+      expect(a.props).toEqual({ a: 60, b: 'bar' })
 
       // call #4
       a.$onChanges({
         a: {currentValue: -10, previousValue: 60, isFirstChange: () => false}
       })
-      expect(spy.calls.mostRecent().args[0])
-        .toEqual({ a: -10, b: 'bar' })
+      expect(a.props).toEqual({ a: -10, b: 'bar' })
     })
     it('should not call #render if no props have changed', () => {
       class A extends NgComponent<Props, {}> {
@@ -179,8 +175,7 @@ describe('Component', () => {
           b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
         })
         expect(spy.calls.count()).toBe(1)
-        expect(spy.calls.mostRecent().args[0])
-          .toEqual({ a: 42, b: 'foo' })
+        expect(a.props).toEqual({ a: 42, b: 'foo' })
 
         // call #2
         a.$onChanges({
@@ -195,8 +190,7 @@ describe('Component', () => {
           b: { currentValue: 'bar', previousValue: 'foo', isFirstChange: () => true }
         })
         expect(spy.calls.count()).toBe(2)
-        expect(spy.calls.mostRecent().args[0])
-          .toEqual({ a: 31, b: 'bar' })
+        expect(a.props).toEqual({ a: 31, b: 'bar' })
       })
     })
 

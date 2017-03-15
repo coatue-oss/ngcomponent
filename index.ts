@@ -7,7 +7,7 @@ abstract class NgComponent<Props, State> {
   protected state: State = {} as State
   public props: Props = {} as Props
 
-  abstract render(props: Props, state: State): void
+  abstract render(): void
 
   /*
     eg. {
@@ -28,7 +28,7 @@ abstract class NgComponent<Props, State> {
     this.props = assign({}, this.props, newProps)
 
     if (this.__isFirstRender) {
-      this.render(this.props, this.state)
+      this.render()
       this.__isFirstRender = false
 
     } else if (this.didPropsChange(newProps, oldProps)) {
@@ -39,7 +39,7 @@ abstract class NgComponent<Props, State> {
 
       if (shouldUpdate) {
         this.componentWillUpdate(this.props, this.state)
-        this.render(this.props, this.state)
+        this.render()
         this.componentDidUpdate(this.props, this.state)
       }
     }
