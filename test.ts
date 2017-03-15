@@ -1,5 +1,5 @@
 import { bootstrap, element, IControllerConstructor, Injectable, IScope, module } from 'angular'
-import {$compile, $rootScope} from 'ngimport'
+import { $compile, $rootScope } from 'ngimport'
 import NgComponent from './'
 
 interface Props {
@@ -67,7 +67,6 @@ describe('Component', () => {
         b: { currentValue: undefined, previousValue: undefined, isFirstChange: () => false }
       })
       expect(spy.calls.count()).toBe(1)
-
     })
   })
 
@@ -122,8 +121,29 @@ describe('Component', () => {
           render() {}
         }
         const spy = spyOn(A.prototype, 'shouldComponentUpdate')
+        // tslint:disable-next-line:no-unused-variable
         const a = new A
+        a.$onChanges({
+          a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
+          b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
+        })
         expect(spy).not.toHaveBeenCalled()
+      })
+      it('should render even if false on initial render', () => {
+        class A extends NgComponent<Props, {}> {
+          shouldComponentUpdate() {
+            return false
+          }
+          render() {}
+        }
+        const spy = spyOn(A.prototype, 'render')
+        // tslint:disable-next-line:no-unused-variable
+        const a = new A
+        a.$onChanges({
+          a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
+          b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
+        })
+        expect(spy).toHaveBeenCalled()
       })
       it('should get called on subsequent renders', () => {
         class A extends NgComponent<Props, {}> {
@@ -131,6 +151,12 @@ describe('Component', () => {
         }
         const spy = spyOn(A.prototype, 'shouldComponentUpdate')
         const a = new A
+        // first render
+        a.$onChanges({
+          a: { currentValue: 10, previousValue: undefined, isFirstChange: () => true },
+          b: { currentValue: undefined, previousValue: undefined, isFirstChange: () => true }
+        })
+        // subsequent render
         a.$onChanges({
           a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
           b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
@@ -228,7 +254,6 @@ describe('Component', () => {
         expect(spy).toHaveBeenCalledWith()
       })
     })
-
   })
 })
 
