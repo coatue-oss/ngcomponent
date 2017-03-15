@@ -113,4 +113,4 @@ npm run tdd
 
 ## License
 
-MIT
+Apache 2.0
