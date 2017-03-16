@@ -44,25 +44,25 @@ describe('Component', () => {
       expect(a.props).toEqual({ a: -10, b: 'bar' })
     })
     it('should not call #render if no props have changed', () => {
+      let counter = 0
       class A extends NgComponent<Props, {}> {
-        render() {}
+        render() { counter++ }
       }
       const a = new A
-      const spy = spyOn(a, 'render')
 
       // call #1
       a.$onChanges({
         a: { currentValue: 42, previousValue: undefined, isFirstChange: () => true },
         b: { currentValue: undefined, previousValue: undefined, isFirstChange: () => true }
       })
-      expect(spy.calls.count()).toBe(1)
+      expect(counter).toBe(1)
 
       // call #2
       a.$onChanges({
         a: { currentValue: 42, previousValue: 42, isFirstChange: () => false },
         b: { currentValue: undefined, previousValue: undefined, isFirstChange: () => false }
       })
-      expect(spy.calls.count()).toBe(1)
+      expect(counter).toBe(1)
     })
   })
 
@@ -160,21 +160,21 @@ describe('Component', () => {
         expect(spy).toHaveBeenCalledWith({a: 42, b: 'foo'}, {a: 10, b: undefined})
       })
       it('should accept a custom comparator', () => {
+        let counter = 0
         class A extends NgComponent<Props, {}> {
-          render() {}
+          render() { counter++ }
           shouldComponentUpdate(newProps: Props, oldProps: Props): boolean {
             return newProps.a > oldProps.a
           }
         }
         const a = new A
-        const spy = spyOn(a, 'render')
 
         // call #1
         a.$onChanges({
           a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
           b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
         })
-        expect(spy.calls.count()).toBe(1)
+        expect(counter).toBe(1)
         expect(a.props).toEqual({ a: 42, b: 'foo' })
 
         // call #2
@@ -182,14 +182,14 @@ describe('Component', () => {
           a: { currentValue: 30, previousValue: 42, isFirstChange: () => true },
           b: { currentValue: 'bar', previousValue: 'foo', isFirstChange: () => true }
         })
-        expect(spy.calls.count()).toBe(1)
+        expect(counter).toBe(1)
 
         // call #3
         a.$onChanges({
           a: { currentValue: 31, previousValue: 30, isFirstChange: () => true },
           b: { currentValue: 'bar', previousValue: 'foo', isFirstChange: () => true }
         })
-        expect(spy.calls.count()).toBe(2)
+        expect(counter).toBe(2)
         expect(a.props).toEqual({ a: 31, b: 'bar' })
       })
     })
