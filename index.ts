@@ -28,6 +28,7 @@ abstract class NgComponent<Props, State> {
     this.props = assign({}, this.props, newProps)
 
     if (this.__isFirstRender) {
+      this.componentWillMount()
       this.render()
       this.__isFirstRender = false
 
@@ -43,10 +44,6 @@ abstract class NgComponent<Props, State> {
         this.componentDidUpdate(this.props, this.state)
       }
     }
-  }
-
-  $onInit() {
-    this.componentWillMount()
   }
 
   $postLink() {
