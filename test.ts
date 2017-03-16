@@ -1,4 +1,5 @@
 import { bootstrap, element, IControllerConstructor, Injectable, IScope, module } from 'angular'
+import { assign } from 'lodash'
 import { $compile, $rootScope } from 'ngimport'
 import NgComponent from './'
 
@@ -272,7 +273,7 @@ function renderComponent(controller: Injectable<IControllerConstructor>) {
   bootstrap(element(), ['test'])
 
   const el = element('<my-component a="a" b="b"></my-component>')
-  const parentScope = Object.assign($rootScope.$new(true), {
+  const parentScope = assign($rootScope.$new(true), {
     a: 10,
     b: 'foo'
   })
