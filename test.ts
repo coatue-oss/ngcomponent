@@ -249,6 +249,52 @@ describe('Component', () => {
       })
     })
   })
+
+  describe('overall lifecycle', () => {
+    it('should be called in correct order', () => {
+      const events: string[] = []
+      class A extends NgComponent<Props, {}> {
+        componentWillMount() {
+          events.push('componentWillMount')
+        }
+        componentDidMount() {
+          events.push('componentDidMount')
+        }
+        shouldComponentUpdate() {
+          events.push('shouldComponentUpdate')
+          return this.props.a === 42
+        }
+        componentWillUpdate() {
+          events.push('componentWillUpdate')
+        }
+        render() {
+          events.push('render')
+        }
+        componentDidUpdate() {
+          events.push('componentDidUpdate')
+        }
+        componentWillUnmount() {
+          events.push('componentWillUnmount')
+        }
+      }
+      const {parentScope, scope} = renderComponent(A)
+      parentScope.$apply(() => parentScope.a = 42) // update
+      parentScope.$apply(() => parentScope.a = 21) // no update
+      parentScope.$destroy()
+      expect(events).toEqual([
+        'componentWillMount',
+        'render',
+        'componentDidMount',
+        'shouldComponentUpdate',
+        'componentWillUpdate',
+        'render',
+        'componentDidUpdate',
+        'shouldComponentUpdate',
+        'componentWillUnmount'
+      ])
+    })
+  })
+
 })
 
 // helpers
