@@ -70,10 +70,10 @@ const chartJSWrapper: IComponentOptions = {
       })
     }
 
-    render(props: Props, state: State) {
-      state.chart.data = props.data
-      state.chart.type = props.type
-      state.chart.update()
+    render() {
+      this.state.chart.data = this.props.data
+      this.state.chart.type = this.props.type
+      this.state.chart.update()
     }
 
     componentWillUnmount() {
