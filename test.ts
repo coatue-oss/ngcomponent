@@ -15,7 +15,6 @@ describe('Component', () => {
         render() {}
       }
       const a = new A
-      const spy = spyOn(a, 'render')
 
       // call #1
       a.$onChanges({
