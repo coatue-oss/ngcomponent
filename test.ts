@@ -1,5 +1,5 @@
 import { bootstrap, element, IControllerConstructor, Injectable, IScope, module } from 'angular'
-import {$compile, $rootScope} from 'ngimport'
+import { $compile, $rootScope } from 'ngimport'
 import NgComponent from './'
 
 interface Props {
@@ -22,30 +22,26 @@ describe('Component', () => {
         a: {currentValue: 42, previousValue: undefined, isFirstChange: () => true},
         b: {currentValue: undefined, previousValue: undefined, isFirstChange: () => true}
       })
-      expect(spy.calls.mostRecent().args[0])
-        .toEqual({ a: 42, b: undefined })
+      expect(a.props).toEqual({ a: 42, b: undefined })
 
       // call #2
       a.$onChanges({
         a: {currentValue: 60, previousValue: 42, isFirstChange: () => false},
         b: {currentValue: 'foo', previousValue: undefined, isFirstChange: () => false}
       })
-      expect(spy.calls.mostRecent().args[0])
-        .toEqual({ a: 60, b: 'foo' })
+      expect(a.props).toEqual({ a: 60, b: 'foo' })
 
       // call #3
       a.$onChanges({
         b: {currentValue: 'bar', previousValue: 'foo', isFirstChange: () => false}
       })
-      expect(spy.calls.mostRecent().args[0])
-        .toEqual({ a: 60, b: 'bar' })
+      expect(a.props).toEqual({ a: 60, b: 'bar' })
 
       // call #4
       a.$onChanges({
         a: {currentValue: -10, previousValue: 60, isFirstChange: () => false}
       })
-      expect(spy.calls.mostRecent().args[0])
-        .toEqual({ a: -10, b: 'bar' })
+      expect(a.props).toEqual({ a: -10, b: 'bar' })
     })
     it('should not call #render if no props have changed', () => {
       class A extends NgComponent<Props, {}> {
@@ -67,7 +63,6 @@ describe('Component', () => {
         b: { currentValue: undefined, previousValue: undefined, isFirstChange: () => false }
       })
       expect(spy.calls.count()).toBe(1)
-
     })
   })
 
@@ -122,8 +117,29 @@ describe('Component', () => {
           render() {}
         }
         const spy = spyOn(A.prototype, 'shouldComponentUpdate')
+        // tslint:disable-next-line:no-unused-variable
         const a = new A
+        a.$onChanges({
+          a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
+          b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
+        })
         expect(spy).not.toHaveBeenCalled()
+      })
+      it('should render even if false on initial render', () => {
+        class A extends NgComponent<Props, {}> {
+          shouldComponentUpdate() {
+            return false
+          }
+          render() {}
+        }
+        const spy = spyOn(A.prototype, 'render')
+        // tslint:disable-next-line:no-unused-variable
+        const a = new A
+        a.$onChanges({
+          a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
+          b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
+        })
+        expect(spy).toHaveBeenCalled()
       })
       it('should get called on subsequent renders', () => {
         class A extends NgComponent<Props, {}> {
@@ -131,6 +147,12 @@ describe('Component', () => {
         }
         const spy = spyOn(A.prototype, 'shouldComponentUpdate')
         const a = new A
+        // first render
+        a.$onChanges({
+          a: { currentValue: 10, previousValue: undefined, isFirstChange: () => true },
+          b: { currentValue: undefined, previousValue: undefined, isFirstChange: () => true }
+        })
+        // subsequent render
         a.$onChanges({
           a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
           b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
@@ -153,8 +175,7 @@ describe('Component', () => {
           b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
         })
         expect(spy.calls.count()).toBe(1)
-        expect(spy.calls.mostRecent().args[0])
-          .toEqual({ a: 42, b: 'foo' })
+        expect(a.props).toEqual({ a: 42, b: 'foo' })
 
         // call #2
         a.$onChanges({
@@ -169,8 +190,7 @@ describe('Component', () => {
           b: { currentValue: 'bar', previousValue: 'foo', isFirstChange: () => true }
         })
         expect(spy.calls.count()).toBe(2)
-        expect(spy.calls.mostRecent().args[0])
-          .toEqual({ a: 31, b: 'bar' })
+        expect(a.props).toEqual({ a: 31, b: 'bar' })
       })
     })
 
@@ -228,7 +248,6 @@ describe('Component', () => {
         expect(spy).toHaveBeenCalledWith()
       })
     })
-
   })
 })
 

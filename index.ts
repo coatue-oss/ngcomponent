@@ -7,7 +7,7 @@ abstract class NgComponent<Props, State> {
   protected state: State = {} as State
   public props: Props = {} as Props
 
-  abstract render(props: Props, state: State): void
+  abstract render(): void
 
   /*
     eg. {
@@ -24,30 +24,23 @@ abstract class NgComponent<Props, State> {
       this.componentWillReceiveProps(newProps)
     }
 
-    if (this.__isFirstRender || this.didPropsChange(newProps, oldProps)) {
+    // store the new props
+    this.props = assign({}, this.props, newProps)
 
-      // compute whether we should render or not
+    if (this.__isFirstRender) {
+      this.render()
+      this.__isFirstRender = false
+
+    } else if (this.didPropsChange(newProps, oldProps)) {
       const shouldUpdate = this.shouldComponentUpdate(
         assign({}, this.props, newProps),
         assign({}, this.props, oldProps)
       )
 
-      // store the new props
-      this.props = assign({}, this.props, newProps)
-
       if (shouldUpdate) {
-
-        if (!this.__isFirstRender) {
-          this.componentWillUpdate(this.props, this.state)
-        }
-
-        this.render(this.props, this.state)
-
-        if (!this.__isFirstRender) {
-          this.componentDidUpdate(this.props, this.state)
-        }
-
-        this.__isFirstRender = false
+        this.componentWillUpdate(this.props, this.state)
+        this.render()
+        this.componentDidUpdate(this.props, this.state)
       }
     }
   }
