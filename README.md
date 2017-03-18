@@ -87,6 +87,7 @@ const chartJSWrapper: IComponentOptions = {
 
 NgComponent has a React-like component lifecycle API:
 
+- `render()` (use this to react to changes to `this.props`)
 - `componentWillMount()`
 - `componentDidMount()`
 - `componentWillReceiveProps(props)`

@@ -1,6 +1,6 @@
 {
   "name": "ngcomponent",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
   "main": "index.js",
   "main:esnext": "index.es2015.js",

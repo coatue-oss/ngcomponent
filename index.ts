@@ -7,8 +7,6 @@ abstract class NgComponent<Props, State> {
   protected state: State = {} as State
   public props: Props = {} as Props
 
-  abstract render(): void
-
   /*
     eg. {
       as: {currentValue: [1, 2, 3], previousValue: [1, 2]},
@@ -61,13 +59,14 @@ abstract class NgComponent<Props, State> {
   /*
     lifecycle hooks
   */
-  componentWillMount() {}
-  componentDidMount() {}
-  componentWillReceiveProps(props: Props) { }
+  componentWillMount(): void {}
+  componentDidMount(): void {}
+  componentWillReceiveProps(props: Props): void { }
   shouldComponentUpdate(newProps: Props, oldProps: Props): boolean { return true }
-  componentWillUpdate(props: Props, state: State) {}
-  componentDidUpdate(props: Props, state: State) {}
+  componentWillUpdate(props: Props, state: State): void {}
+  componentDidUpdate(props: Props, state: State): void {}
   componentWillUnmount() {}
+  render(): void {}
 }
 
 export default NgComponent
