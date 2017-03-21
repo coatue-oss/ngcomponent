@@ -1,6 +1,6 @@
-# NgComponent [![Build Status][build]](https://circleci.com/gh/coatue/ngcomponent) [![npm]](https://www.npmjs.com/package/ngcomponent) [![mit]](https://opensource.org/licenses/MIT)
+# NgComponent [![Build Status][build]](https://circleci.com/gh/coatue-oss/ngcomponent) [![npm]](https://www.npmjs.com/package/ngcomponent) [![mit]](https://opensource.org/licenses/MIT)
 
-[build]: https://img.shields.io/circleci/project/coatue/ngcomponent.svg?branch=master&style=flat-square
+[build]: https://img.shields.io/circleci/project/coatue-oss/ngcomponent.svg?branch=master&style=flat-square
 [npm]: https://img.shields.io/npm/v/ngcomponent.svg?style=flat-square
 [mit]: https://img.shields.io/npm/l/ngcomponent.svg?style=flat-square
 
