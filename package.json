@@ -35,7 +35,7 @@
   "homepage": "https://github.com/coatue-oss/ngcomponent#readme",
   "devDependencies": {
     "@types/angular-mocks": "^1.5.9",
-    "@types/jasmine": "^1.3.2",
+    "@types/jasmine": "^2.5.46",
     "browserify": "^14.0.1",
     "jasmine": "^2.5.3",
     "karma": "^1.5.0",
