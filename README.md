@@ -1,7 +1,5 @@
 # NgComponent [![Build Status][build]](https://circleci.com/gh/coatue-oss/ngcomponent) [![npm]](https://www.npmjs.com/package/ngcomponent) [![mit]](https://opensource.org/licenses/MIT)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/coatue-oss/ngcomponent.svg)](https://greenkeeper.io/)
-
 [build]: https://img.shields.io/circleci/project/coatue-oss/ngcomponent.svg?branch=master&style=flat-square
 [npm]: https://img.shields.io/npm/v/ngcomponent.svg?style=flat-square
 [mit]: https://img.shields.io/npm/l/ngcomponent.svg?style=flat-square
