@@ -37,6 +37,7 @@
     "@types/angular-mocks": "^1.5.9",
     "@types/jasmine": "^2.5.46",
     "browserify": "^14.0.1",
+    "electron": "^1.6.2",
     "jasmine": "^2.5.3",
     "karma": "^1.5.0",
     "karma-browserify": "^5.1.1",
@@ -49,7 +50,9 @@
     "tslint": "^5.0.0",
     "tslint-no-circular-imports": "^0.1.0",
     "typescript": "^2.2.1",
-    "watchify": "^3.9.0"
+    "wallaby-webpack": "0.0.38",
+    "watchify": "^3.9.0",
+    "webpack": "^2.3.2"
   },
   "dependencies": {
     "@types/angular": "^1.6.9",
