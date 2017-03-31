@@ -1,7 +1,10 @@
+.circleci
 .DS_Store
-circle.yml
+.vscode
+karma.conf.js
 node_modules
 test.d.ts
 test.js
 test.map
-karma.conf.js
+tslint.json
+wallaby.js

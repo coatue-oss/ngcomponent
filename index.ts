@@ -18,19 +18,19 @@ abstract class NgComponent<Props, State> {
     const oldProps = mapValues<{}, Props>(changes, 'previousValue')
     const newProps = mapValues<{}, Props>(changes, 'currentValue')
 
-    const props = assign({}, this.props, newProps)
-    const state = assign({}, this.state) // TODO: implement setState and test it with shouldComponentUpdate
+    const nextProps = assign({}, this.props, newProps)
+    // TODO: implement nextState (which also means implement this.setState)
 
     if (this.__isFirstRender) {
-      Object.assign(this, { props, state })
+      assign(this, { props: nextProps })
       this.componentWillMount()
       this.render()
       this.__isFirstRender = false
     } else {
       this.componentWillReceiveProps(newProps)
       if (!this.didPropsChange(newProps, oldProps)) return
-      const shouldUpdate = this.shouldComponentUpdate(props, state)
-      Object.assign(this, { props, state })
+      const shouldUpdate = this.shouldComponentUpdate(nextProps, this.state)
+      assign(this, { props: nextProps })
       if (!shouldUpdate) return
 
       this.componentWillUpdate(this.props, this.state)
