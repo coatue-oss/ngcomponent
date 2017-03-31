@@ -14,33 +14,28 @@ abstract class NgComponent<Props, State> {
     }
   */
   // nb: this method is explicity exposed for unit testing
-  public $onChanges(changes: {}) {
+  public $onChanges(changes: object) {
     const oldProps = mapValues<{}, Props>(changes, 'previousValue')
     const newProps = mapValues<{}, Props>(changes, 'currentValue')
 
-    if (!this.__isFirstRender) {
-      this.componentWillReceiveProps(newProps)
-    }
-
-    // store the new props
-    this.props = assign({}, this.props, newProps)
+    const props = assign({}, this.props, newProps)
+    const state = assign({}, this.state) // TODO: implement setState and test it with shouldComponentUpdate
 
     if (this.__isFirstRender) {
+      Object.assign(this, { props, state })
       this.componentWillMount()
       this.render()
       this.__isFirstRender = false
+    } else {
+      this.componentWillReceiveProps(newProps)
+      if (!this.didPropsChange(newProps, oldProps)) return
+      const shouldUpdate = this.shouldComponentUpdate(props, state)
+      Object.assign(this, { props, state })
+      if (!shouldUpdate) return
 
-    } else if (this.didPropsChange(newProps, oldProps)) {
-      const shouldUpdate = this.shouldComponentUpdate(
-        assign({}, this.props, newProps),
-        assign({}, this.props, oldProps)
-      )
-
-      if (shouldUpdate) {
-        this.componentWillUpdate(this.props, this.state)
-        this.render()
-        this.componentDidUpdate(this.props, this.state)
-      }
+      this.componentWillUpdate(this.props, this.state)
+      this.render()
+      this.componentDidUpdate(this.props, this.state)
     }
   }
 
@@ -62,7 +57,7 @@ abstract class NgComponent<Props, State> {
   componentWillMount(): void {}
   componentDidMount(): void {}
   componentWillReceiveProps(props: Props): void { }
-  shouldComponentUpdate(newProps: Props, oldProps: Props): boolean { return true }
+  shouldComponentUpdate(nextProps: Props, nextState: State): boolean { return true }
   componentWillUpdate(props: Props, state: State): void {}
   componentDidUpdate(props: Props, state: State): void {}
   componentWillUnmount() {}

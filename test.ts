@@ -9,7 +9,6 @@ interface Props {
 }
 
 describe('Component', () => {
-
   describe('#$onChanges', () => {
     it('should call #render if any prop has changed', () => {
       class A extends NgComponent<Props, {}> {
@@ -157,14 +156,14 @@ describe('Component', () => {
           a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
           b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
         })
-        expect(spy).toHaveBeenCalledWith({a: 42, b: 'foo'}, {a: 10, b: undefined})
+        expect(spy).toHaveBeenCalledWith({a: 42, b: 'foo'}, {})
       })
       it('should accept a custom comparator', () => {
         let counter = 0
         class A extends NgComponent<Props, {}> {
           render() { counter++ }
-          shouldComponentUpdate(newProps: Props, oldProps: Props): boolean {
-            return newProps.a > oldProps.a
+          shouldComponentUpdate(nextProps: Props): boolean {
+            return nextProps.a > this.props.a
           }
         }
         const a = new A
@@ -260,9 +259,9 @@ describe('Component', () => {
         componentDidMount() {
           events.push('componentDidMount')
         }
-        shouldComponentUpdate() {
+        shouldComponentUpdate(nextProps: Props) {
           events.push('shouldComponentUpdate')
-          return this.props.a === 42
+          return nextProps.a === 42
         }
         componentWillUpdate() {
           events.push('componentWillUpdate')
@@ -294,7 +293,6 @@ describe('Component', () => {
       ])
     })
   })
-
 })
 
 // helpers
