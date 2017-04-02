@@ -6,7 +6,7 @@
   "main:esnext": "index.es2015.js",
   "typings": "index.d.ts",
   "scripts": {
-    "build": "rm index.d.ts ; tsc -d -m es2015 --outDir . && mv ./index.js ./index.es2015.js && tsc -m commonjs -t es5  --outDir .",
+    "build": "rm -f index.d.ts ; tsc -d -m es2015 --outDir . && mv ./index.js ./index.es2015.js && tsc -m commonjs -t es5  --outDir .",
     "tdd": "npm run watch & karma start",
     "test": "npm run build && karma start --single-run",
     "watch": "tsc -w"
@@ -41,7 +41,7 @@
     "jasmine": "^2.5.3",
     "karma": "^1.5.0",
     "karma-browserify": "^5.1.1",
-    "karma-chrome-launcher": "^2.0.0",
+    "karma-electron-launcher": "^0.2.0",
     "karma-jasmine": "^1.1.0",
     "karma-mocha-reporter": "^2.2.2",
     "karma-source-map-support": "^1.2.0",
