@@ -2,13 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:6.7.0
+      - image: beneaththeink/node-xvfb:6
     working_directory: ~/tmp
     steps:
       - checkout
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - run:
-          name: NPM Test
-          command: npm test
+      - run: npm install
+      - run: npm test
