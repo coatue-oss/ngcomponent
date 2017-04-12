@@ -101,15 +101,17 @@ describe('Component', () => {
         renderComponent(A)
         expect(spy).not.toHaveBeenCalled()
       })
-      it('should get called when props update', () => {
+      it('should get called when props update', (done) => {
         class A extends NgComponent<Props, {}> {
           render() { }
-          componentWillReceiveProps(props: Props) {}
+          componentWillReceiveProps(props: Props) {
+            expect(props).toEqual({ a: 20, b: 'foo' })
+            expect(this.props).not.toEqual(props)
+            done()
+          }
         }
         const {parentScope, scope} = renderComponent(A)
-        const spy = spyOn(scope.$ctrl, 'componentWillReceiveProps')
         parentScope.$apply(() => parentScope.a = 20)
-        expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' })
       })
     })
 
