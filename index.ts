@@ -3,6 +3,7 @@ import {assign, mapValues, some} from 'lodash'
 abstract class NgComponent<Props, State> {
 
   private __isFirstRender = true
+  private __nextState: State
   private __setStateTriggersLifecycle = true
 
   props: Props = {} as Props
@@ -23,27 +24,27 @@ abstract class NgComponent<Props, State> {
   }
 
   // note: this isn't meant to exactly replicate React's setState (e.g. http://stackoverflow.com/q/28922275/7816712)
-  protected setState(newState: State) {
+  protected setState(newState: Partial<State>) {
     if (this.__setStateTriggersLifecycle) {
       setTimeout(() => this.lifecycle({} as Props, newState), 0)
     } else {
-      this.state = assign({}, this.state, newState)
+      this.__nextState = assign({}, this.state, newState)
     }
   }
 
-  private lifecycle(newProps: Props, newState: State) {
+  private lifecycle(newProps: Partial<Props>, newState: Partial<State>) {
     const nextProps = assign({}, this.props, newProps)
-    const nextState = assign({}, this.state, newState)
+    this.__nextState = assign({}, this.state, newState)
 
     if (this.__isFirstRender) {
-      assign(this, { props: nextProps, state: nextState })
+      assign(this, { props: nextProps, state: this.__nextState })
       this.avoidSetStateLifecycle(() => this.componentWillMount())
       this.render()
       this.__isFirstRender = false
     } else {
       this.avoidSetStateLifecycle(() => this.componentWillReceiveProps(nextProps))
-      const shouldUpdate = this.shouldComponentUpdate(nextProps, nextState)
-      assign(this, { props: nextProps, state: nextState })
+      const shouldUpdate = this.shouldComponentUpdate(nextProps, this.__nextState)
+      assign(this, { props: nextProps, state: this.__nextState })
       if (!shouldUpdate) return
 
       this.componentWillUpdate(this.props, this.state)
