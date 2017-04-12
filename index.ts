@@ -27,8 +27,8 @@ abstract class NgComponent<Props, State> {
       this.render()
       this.__isFirstRender = false
     } else {
-      this.componentWillReceiveProps(newProps)
       if (!this.didPropsChange(newProps, oldProps)) return
+      this.componentWillReceiveProps(nextProps)
       const shouldUpdate = this.shouldComponentUpdate(nextProps, this.state)
       assign(this, { props: nextProps })
       if (!shouldUpdate) return
