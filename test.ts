@@ -109,7 +109,7 @@ describe('Component', () => {
         const {parentScope, scope} = renderComponent(A)
         const spy = spyOn(scope.$ctrl, 'componentWillReceiveProps')
         parentScope.$apply(() => parentScope.a = 20)
-        expect(spy).toHaveBeenCalledWith({ a: 20 })
+        expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' })
       })
     })
 
