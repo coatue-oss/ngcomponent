@@ -101,7 +101,7 @@ describe('Component', () => {
         renderComponent(A)
         expect(spy).not.toHaveBeenCalled()
       })
-      it('should get called when props update', (done) => {
+      it('should get called when props update', done => {
         class A extends NgComponent<Props, {}> {
           render() { }
           componentWillReceiveProps(props: Props) {
@@ -255,6 +255,98 @@ describe('Component', () => {
         parentScope.$destroy()
         expect(spy).toHaveBeenCalledWith()
       })
+    })
+  })
+
+  describe('#setState', () => {
+    it('should not trigger a re-render in componentWillMount', () => {
+      const events = []
+      class A extends NgComponent<Props, State> {
+        constructor() {
+          super()
+          this.state = { c: false }
+        }
+        componentWillMount() {
+          events.push('componentWillMount')
+          this.setState({ c: true })
+        }
+        render() {
+          events.push('render')
+        }
+      }
+      const {parentScope, scope} = renderComponent(A)
+      expect(events).toEqual(['componentWillMount', 'render'])
+      parentScope.$destroy()
+    })
+
+    it('should not trigger a re-render in componentWillReceiveProps', () => {
+      const events = []
+      class A extends NgComponent<Props, State> {
+        constructor() {
+          super()
+          this.state = { c: false }
+        }
+        componentWillReceiveProps() {
+          events.push('componentWillReceiveProps')
+          this.setState({ c: true })
+        }
+        render() {
+          events.push('render')
+        }
+      }
+      const {parentScope, scope} = renderComponent(A)
+      parentScope.$apply(() => parentScope.a = 30)
+      expect(events).toEqual(['render', 'componentWillReceiveProps', 'render'])
+      parentScope.$destroy()
+    })
+
+    it('should trigger a re-render in componentDidMount', done => {
+      const events = []
+      class A extends NgComponent<Props, State> {
+        constructor() {
+          super()
+          this.state = { c: false }
+        }
+        componentDidMount() {
+          this.setState({ c: true })
+          events.push('componentDidMount')
+        }
+        render() {
+          events.push('render')
+        }
+      }
+      const {parentScope, scope} = renderComponent(A)
+      setTimeout(() => {
+        expect(events).toEqual(['render', 'componentDidMount', 'render'])
+        parentScope.$destroy()
+        done()
+      }, 0)
+    })
+
+    it('should trigger a re-render in componentDidUpdate', done => {
+      const events = []
+      class A extends NgComponent<Props, State> {
+        constructor() {
+          super()
+          this.state = { c: false }
+        }
+        componentDidUpdate() {
+          if (this.state.c === false) {
+            this.setState({ c: true })
+            events.push('componentDidUpdate')
+          }
+        }
+        render() {
+          events.push('render')
+        }
+      }
+      const {parentScope, scope} = renderComponent(A)
+      parentScope.$apply(() => parentScope.a = 30)
+      setTimeout(() => {
+        expect(events).toEqual(['render', 'render', 'componentDidUpdate', 'render'])
+        parentScope.$destroy()
+        done()
+      }, 0)
     })
   })
 
