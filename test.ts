@@ -7,6 +7,9 @@ interface Props {
   a: number
   b: string
 }
+interface State {
+  c: boolean
+}
 
 describe('Component', () => {
   describe('#$onChanges', () => {
@@ -142,6 +145,10 @@ describe('Component', () => {
       })
       it('should get called on subsequent renders', () => {
         class A extends NgComponent<Props, {}> {
+          constructor() {
+            super()
+            this.state = {c: false}
+          }
           render() {}
         }
         const spy = spyOn(A.prototype, 'shouldComponentUpdate')
@@ -156,7 +163,7 @@ describe('Component', () => {
           a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
           b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
         })
-        expect(spy).toHaveBeenCalledWith({a: 42, b: 'foo'}, {})
+        expect(spy).toHaveBeenCalledWith({a: 42, b: 'foo'}, { c: false })
       })
       it('should accept a custom comparator', () => {
         let counter = 0
