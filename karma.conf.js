@@ -4,7 +4,6 @@ module.exports = function(config) {
     frameworks: ['source-map-support', 'browserify', 'jasmine'],
     files: [
       './node_modules/angular/angular.js',
-      './node_modules/angular-mocks/angular-mocks.js',
       './test.js'
     ],
     preprocessors: {
