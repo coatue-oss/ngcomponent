@@ -1,5 +1,3 @@
-import {assign, mapValues, some} from 'lodash'
-
 abstract class NgComponent<Props, State> {
 
   private __isFirstRender = true
@@ -15,14 +13,26 @@ abstract class NgComponent<Props, State> {
   */
   // nb: this method is explicity exposed for unit testing
   public $onChanges(changes: object) {
-    const oldProps = mapValues<{}, Props>(changes, 'previousValue')
-    const newProps = mapValues<{}, Props>(changes, 'currentValue')
-
-    const nextProps = assign({}, this.props, newProps)
+    const oldProps = Object.keys(changes).reduce((acc, key) => {
+      try {
+        acc[key] = changes[key]['previousValue']
+      } catch (_) {}
+      return acc
+    }, {} as any)
+    const newProps = Object.keys(changes).reduce((acc, key) => {
+      try {
+        acc[key] = changes[key]['currentValue']
+      } catch (_) {}
+      return acc
+    }, {} as any)
+    const nextProps = {
+        ...(this.props as any as object),
+        ...newProps
+    }
     // TODO: implement nextState (which also means implement this.setState)
 
     if (this.__isFirstRender) {
-      assign(this, { props: nextProps })
+      this.props = nextProps
       this.componentWillMount()
       this.render()
       this.__isFirstRender = false
@@ -30,7 +40,7 @@ abstract class NgComponent<Props, State> {
       if (!this.didPropsChange(newProps, oldProps)) return
       this.componentWillReceiveProps(nextProps)
       const shouldUpdate = this.shouldComponentUpdate(nextProps, this.state)
-      assign(this, { props: nextProps })
+      this.props = nextProps
       if (!shouldUpdate) return
 
       this.componentWillUpdate(this.props, this.state)
@@ -48,7 +58,7 @@ abstract class NgComponent<Props, State> {
   }
 
   protected didPropsChange(newProps: Props, oldProps: Props): boolean {
-    return some(newProps, (v, k) => v !== oldProps[k])
+    return Object.keys(newProps as any as object).find(key => oldProps[key] !== newProps[key]) !== undefined
   }
 
   /*
