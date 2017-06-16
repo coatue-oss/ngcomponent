@@ -25,7 +25,7 @@ abstract class NgComponent<Props, State> {
       try {
         newProps[key] = newProps[key]['currentValue']
       } catch (e) {}
-      didPropsChange = didPropsChange || (newProps[key] === oldProps[key])
+      didPropsChange = didPropsChange || (newProps[key] !== oldProps[key])
     }
     const nextProps = {
         ...(this.props as any as object),
