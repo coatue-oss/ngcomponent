@@ -13,22 +13,24 @@ abstract class NgComponent<Props, State> {
   */
   // nb: this method is explicity exposed for unit testing
   public $onChanges(changes: object) {
-    const oldProps = Object.keys(changes).reduce((acc, key) => {
+    const oldProps = clone(changes)
+    const newProps = clone(changes)
+    const changeKeys = Object.getOwnPropertyNames(changes)
+    let didPropsChange = false
+    for (let i = 0; i < changeKeys.length; ++i) {
+      const key = changeKeys[i]
       try {
-        acc[key] = changes[key]['previousValue']
-      } catch (_) {}
-      return acc
-    }, {} as any)
-    const newProps = Object.keys(changes).reduce((acc, key) => {
+        oldProps[key] = oldProps[key]['previousValue']
+      } catch (e) {}
       try {
-        acc[key] = changes[key]['currentValue']
-      } catch (_) {}
-      return acc
-    }, {} as any)
+        newProps[key] = newProps[key]['currentValue']
+      } catch (e) {}
+      didPropsChange = didPropsChange || (newProps[key] === oldProps[key])
+    }
     const nextProps = {
         ...(this.props as any as object),
         ...newProps
-    }
+    } as any as Props
     // TODO: implement nextState (which also means implement this.setState)
 
     if (this.__isFirstRender) {
@@ -37,7 +39,7 @@ abstract class NgComponent<Props, State> {
       this.render()
       this.__isFirstRender = false
     } else {
-      if (!this.didPropsChange(newProps, oldProps)) return
+      if (!didPropsChange) return
       this.componentWillReceiveProps(nextProps)
       const shouldUpdate = this.shouldComponentUpdate(nextProps, this.state)
       this.props = nextProps
@@ -57,10 +59,6 @@ abstract class NgComponent<Props, State> {
     this.componentWillUnmount()
   }
 
-  protected didPropsChange(newProps: Props, oldProps: Props): boolean {
-    return Object.keys(newProps as any as object).find(key => oldProps[key] !== newProps[key]) !== undefined
-  }
-
   /*
     lifecycle hooks
   */
@@ -72,6 +70,10 @@ abstract class NgComponent<Props, State> {
   componentDidUpdate(props: Props, state: State): void {}
   componentWillUnmount() {}
   render(): void {}
+}
+
+function clone(t) {
+  return JSON.parse(JSON.stringify(t)) as object
 }
 
 export default NgComponent
