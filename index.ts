@@ -1,5 +1,3 @@
-import {assign, mapValues, some} from 'lodash'
-
 abstract class NgComponent<Props, State> {
 
   private __isFirstRender = true
@@ -15,22 +13,36 @@ abstract class NgComponent<Props, State> {
   */
   // nb: this method is explicity exposed for unit testing
   public $onChanges(changes: object) {
-    const oldProps = mapValues<{}, Props>(changes, 'previousValue')
-    const newProps = mapValues<{}, Props>(changes, 'currentValue')
-
-    const nextProps = assign({}, this.props, newProps)
+    const oldProps: object = clone(changes)
+    const newProps: object = clone(changes)
+    const changeKeys = Object.getOwnPropertyNames(changes)
+    let didPropsChange = false
+    for (let i = 0; i < changeKeys.length; ++i) {
+      const key = changeKeys[i]
+      try {
+        oldProps[key] = oldProps[key]['previousValue']
+      } catch (e) {}
+      try {
+        newProps[key] = newProps[key]['currentValue']
+      } catch (e) {}
+      didPropsChange = didPropsChange || (newProps[key] !== oldProps[key])
+    }
+    const nextProps = {
+        ...(this.props as any as object),
+        ...newProps
+    } as any as Props
     // TODO: implement nextState (which also means implement this.setState)
 
     if (this.__isFirstRender) {
-      assign(this, { props: nextProps })
+      this.props = nextProps
       this.componentWillMount()
       this.render()
       this.__isFirstRender = false
     } else {
-      if (!this.didPropsChange(newProps, oldProps)) return
+      if (!didPropsChange) return
       this.componentWillReceiveProps(nextProps)
       const shouldUpdate = this.shouldComponentUpdate(nextProps, this.state)
-      assign(this, { props: nextProps })
+      this.props = nextProps
       if (!shouldUpdate) return
 
       this.componentWillUpdate(this.props, this.state)
@@ -47,10 +59,6 @@ abstract class NgComponent<Props, State> {
     this.componentWillUnmount()
   }
 
-  protected didPropsChange(newProps: Props, oldProps: Props): boolean {
-    return some(newProps, (v, k) => v !== oldProps[k])
-  }
-
   /*
     lifecycle hooks
   */
@@ -62,6 +70,10 @@ abstract class NgComponent<Props, State> {
   componentDidUpdate(props: Props, state: State): void {}
   componentWillUnmount() {}
   render(): void {}
+}
+
+function clone(t) {
+  return JSON.parse(JSON.stringify(t)) as object
 }
 
 export default NgComponent
