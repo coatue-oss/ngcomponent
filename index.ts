@@ -13,8 +13,8 @@ abstract class NgComponent<Props, State> {
   */
   // nb: this method is explicity exposed for unit testing
   public $onChanges(changes: object) {
-    const oldProps = clone(changes)
-    const newProps = clone(changes)
+    const oldProps: object = clone(changes)
+    const newProps: object = clone(changes)
     const changeKeys = Object.getOwnPropertyNames(changes)
     let didPropsChange = false
     for (let i = 0; i < changeKeys.length; ++i) {
