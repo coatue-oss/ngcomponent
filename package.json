@@ -48,7 +48,7 @@
     "karma-mocha-reporter": "^2.2.3",
     "karma-source-map-support": "^1.2.0",
     "ngimport": "^0.7.0",
-    "rollupify": "^0.3.9",
+    "rollupify": "^0.4.0",
     "tslint": "^5.1.0",
     "tslint-no-circular-imports": "^0.1.0",
     "typescript": "^2.3.1",
