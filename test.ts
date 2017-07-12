@@ -323,7 +323,7 @@ function renderComponent(controller: Injectable<IControllerConstructor>) {
       template: `{{a}}`
     })
 
-  bootstrap(element(), ['test'])
+  bootstrap(div(), ['test'])
 
   const el = element('<my-component a="a" b="b"></my-component>')
   const parentScope = assign($rootScope.$new(true), {
@@ -337,4 +337,8 @@ function renderComponent(controller: Injectable<IControllerConstructor>) {
     parentScope,
     scope
   }
+}
+
+function div() {
+  return element(document.createElement('div'))
 }
