@@ -54,7 +54,7 @@
     "typescript": "^2.3.1",
     "wallaby-webpack": "0.0.38",
     "watchify": "^3.9.0",
-    "webpack": "^2.4.1",
+    "webpack": "^3.0.0",
     "xvfb-maybe": "^0.2.1"
   },
   "dependencies": {
