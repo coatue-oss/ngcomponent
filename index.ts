@@ -1,4 +1,6 @@
-import {assign, mapValues, some} from 'lodash'
+const some = require('lodash.some')
+const assign = require('lodash.assign')
+const mapValues = require('lodash.mapvalues')
 
 abstract class NgComponent<Props, State> {
 
@@ -15,8 +17,8 @@ abstract class NgComponent<Props, State> {
   */
   // nb: this method is explicity exposed for unit testing
   public $onChanges(changes: object) {
-    const oldProps = mapValues<{}, Props>(changes, 'previousValue')
-    const newProps = mapValues<{}, Props>(changes, 'currentValue')
+    const oldProps = mapValues(changes, 'previousValue')
+    const newProps = mapValues(changes, 'currentValue')
 
     const nextProps = assign({}, this.props, newProps)
     // TODO: implement nextState (which also means implement this.setState)
