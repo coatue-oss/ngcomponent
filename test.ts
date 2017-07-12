@@ -1,7 +1,8 @@
 import { bootstrap, element, IControllerConstructor, Injectable, IScope, module } from 'angular'
-import { assign } from 'lodash'
 import { $compile, $rootScope } from 'ngimport'
 import NgComponent from './'
+
+const assign = require('lodash.assign')
 
 interface Props {
   a: number
