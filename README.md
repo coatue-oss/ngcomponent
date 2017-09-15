@@ -9,7 +9,11 @@
 ## Installation
 
 ```sh
-npm install --save ngcomponent
+# Using Yarn:
+yarn add ngcomponent
+
+# Or, using NPM:
+npm install ngcomponent --save
 ```
 
 ## Usage
@@ -17,7 +21,6 @@ npm install --save ngcomponent
 *Note: This example is in TypeScript, but it works just as well in vanilla JavaScript*
 
 ```ts
-import {IComponentOptions} from 'angular'
 import NgComponent from 'ngcomponent'
 
 interface Props {
@@ -27,7 +30,7 @@ interface Props {
 
 interface State {}
 
-const myComponent: IComponentOptions = {
+const myComponent = {
   bindings: {
     foo: '<',
     bar: '<'
@@ -44,6 +47,7 @@ const myComponent: IComponentOptions = {
 ## Full Example
 
 ```ts
+import NgComponent from 'ngcomponent'
 
 interface Props {
   data: number[]
@@ -54,7 +58,7 @@ interface State {
   chart: Chart
 }
 
-const chartJSWrapper: IComponentOptions = {
+const chartJSWrapper = {
   bindings: {
     data: '<',
     type: '<'

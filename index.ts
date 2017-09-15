@@ -1,4 +1,4 @@
-import {assign, mapValues, some} from 'lodash'
+import { assign, mapValues, some } from 'lodash'
 
 abstract class NgComponent<Props, State> {
 

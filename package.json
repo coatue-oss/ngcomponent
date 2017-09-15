@@ -6,8 +6,9 @@
   "main:esnext": "index.es2015.js",
   "typings": "index.d.ts",
   "scripts": {
-    "build": "npm run clean && tsc -d -m es2015 && mv ./index.js ./index.es2015.js && tsc -m commonjs -t es5",
+    "build": "npm run clean && npm run lint && tsc -d -m es2015 && mv ./index.js ./index.es2015.js && tsc -m commonjs -t es5",
     "clean": "rm -f index.d.ts",
+    "lint": "tslint .",
     "prepublishOnly": "npm test",
     "pretest": "npm run build",
     "tdd": "npm run watch & karma start",
