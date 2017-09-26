@@ -1,12 +1,11 @@
 {
   "name": "ngcomponent",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
   "main": "index.js",
-  "main:esnext": "index.es2015.js",
   "typings": "index.d.ts",
   "scripts": {
-    "build": "npm run clean && npm run lint && tsc -d -m es2015 && mv ./index.js ./index.es2015.js && tsc -m commonjs -t es5",
+    "build": "npm run clean && npm run lint && tsc -m commonjs -t es5",
     "clean": "rm -f index.d.ts",
     "lint": "tslint .",
     "prepublishOnly": "npm test",
@@ -60,12 +59,8 @@
   },
   "dependencies": {
     "@types/angular": "^1.6.32",
-    "@types/lodash.assign": "^4.2.2",
-    "@types/lodash.mapvalues": "^4.6.3",
-    "@types/lodash.some": "^4.6.3",
+    "@types/lodash": "^4.14.76",
     "angular": ">=1.5.0",
-    "lodash.assign": "^4.2.0",
-    "lodash.mapvalues": "^4.6.0",
-    "lodash.some": "^4.6.0"
+    "lodash": "^4.17.4"
   }
 }
