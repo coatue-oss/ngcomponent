@@ -14,7 +14,7 @@ interface State {
 describe('Component', () => {
   describe('#$onChanges', () => {
     it('should call #render if any prop has changed', () => {
-      class A extends NgComponent<Props, {}> {
+      class A extends NgComponent<Props, State> {
         render() {}
       }
       const a = new A
@@ -110,7 +110,7 @@ describe('Component', () => {
             done()
           }
         }
-        const {parentScope, scope} = renderComponent(A)
+        const {parentScope} = renderComponent(A)
         parentScope.$apply(() => parentScope.a = 20)
       })
     })
@@ -172,7 +172,7 @@ describe('Component', () => {
         class A extends NgComponent<Props, {}> {
           render() { counter++ }
           shouldComponentUpdate(nextProps: Props): boolean {
-            return nextProps.a > this.props.a
+            return Boolean(this.props.a && nextProps.a > this.props.a)
           }
         }
         const a = new A
@@ -214,7 +214,7 @@ describe('Component', () => {
       it('should get called before the component renders', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
-          componentWillUpdate(props: Props) {}
+          componentWillUpdate() {}
         }
         const {parentScope, scope} = renderComponent(A)
         const spy = spyOn(scope.$ctrl, 'componentWillUpdate')
@@ -235,7 +235,7 @@ describe('Component', () => {
       it('should get called after the component renders', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
-          componentDidUpdate(props: Props) {}
+          componentDidUpdate() {}
         }
         const {parentScope, scope} = renderComponent(A)
         const spy = spyOn(scope.$ctrl, 'componentDidUpdate')
@@ -285,7 +285,7 @@ describe('Component', () => {
           events.push('componentWillUnmount')
         }
       }
-      const {parentScope, scope} = renderComponent(A)
+      const {parentScope} = renderComponent(A)
       parentScope.$apply(() => parentScope.a = 42) // update
       parentScope.$apply(() => parentScope.a = 21) // no update
       parentScope.$destroy()
@@ -309,7 +309,7 @@ describe('Component', () => {
 interface Scope extends IScope {
   a: number
   b: string
-  $ctrl: NgComponent<Props, void>
+  $ctrl: NgComponent<Props>
 }
 
 function renderComponent(controller: Injectable<IControllerConstructor>) {

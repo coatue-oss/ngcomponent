@@ -3,11 +3,14 @@
     "lib": ["dom", "es2015"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "preserveConstEnums": true,
     "outDir": ".",
-    "sourceMap": false,
-    "target": "es6"
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5"
   },
   "files": [
     "./index.ts",

@@ -2,12 +2,15 @@ import assign = require('lodash/assign')
 import mapValues = require('lodash/mapValues')
 import some = require('lodash/some')
 
-abstract class NgComponent<Props, State> {
+abstract class NgComponent<
+  Props extends { [k: string]: any } = {},
+  State extends { [k: string]: any } = {}
+> {
 
   private __isFirstRender = true
 
   protected state: State = {} as State
-  public props: Props = {} as Props
+  public props: Partial<Props> = {} as Partial<Props>
 
   /*
     eg. {
@@ -58,10 +61,10 @@ abstract class NgComponent<Props, State> {
   */
   componentWillMount(): void {}
   componentDidMount(): void {}
-  componentWillReceiveProps(props: Props): void { }
-  shouldComponentUpdate(nextProps: Props, nextState: State): boolean { return true }
-  componentWillUpdate(props: Props, state: State): void {}
-  componentDidUpdate(props: Props, state: State): void {}
+  componentWillReceiveProps(_props: Props): void { }
+  shouldComponentUpdate(_nextProps: Props, _nextState: State): boolean { return true }
+  componentWillUpdate(_props: Partial<Props>, _state: State): void {}
+  componentDidUpdate(_props: Partial<Props>, _state: State): void {}
   componentWillUnmount() {}
   render(): void {}
 }

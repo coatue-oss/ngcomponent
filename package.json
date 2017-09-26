@@ -1,11 +1,11 @@
 {
   "name": "ngcomponent",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
-    "build": "npm run clean && npm run lint && tsc -m commonjs -t es5",
+    "build": "npm run clean && npm run lint && tsc",
     "clean": "rm -f index.d.ts",
     "lint": "tslint .",
     "prepublishOnly": "npm test",
