@@ -52,7 +52,7 @@
     "tslint": "^5.7.0",
     "tslint-no-circular-imports": "^0.2.0",
     "typescript": "^2.5.2",
-    "wallaby-webpack": "0.0.40",
+    "wallaby-webpack": "0.0.41",
     "watchify": "^3.9.0",
     "webpack": "^3.6.0",
     "xvfb-maybe": "^0.2.1"
