@@ -1,6 +1,6 @@
 {
   "name": "ngcomponent",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
   "main": "index.js",
   "typings": "index.d.ts",

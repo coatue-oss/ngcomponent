@@ -20,7 +20,7 @@ abstract class NgComponent<
   */
   // nb: this method is explicity exposed for unit testing
   public $onChanges(changes: object) {
-    const oldProps = mapValues<{}, Props>(changes, 'previousValue')
+    const oldProps = this.props
     const newProps = mapValues<{}, Props>(changes, 'currentValue')
 
     const nextProps = assign({}, this.props, newProps)
@@ -52,7 +52,7 @@ abstract class NgComponent<
     this.componentWillUnmount()
   }
 
-  protected didPropsChange(newProps: Props, oldProps: Props): boolean {
+  protected didPropsChange(newProps: Partial<Props>, oldProps: Partial<Props>): boolean {
     return some(newProps, (v, k) => v !== oldProps[k])
   }
 

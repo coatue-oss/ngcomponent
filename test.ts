@@ -45,6 +45,16 @@ describe('Component', () => {
       })
       expect(a.props).toEqual({ a: -10, b: 'bar' })
     })
+    it('should call #render even if props were not initialized to undefined by angular', () => {
+      class A extends NgComponent<Props, State> {
+        render() {}
+      }
+      let a = new A
+      a.$onChanges({})
+      spyOn(a, 'render')
+      a.$onChanges({ a: { currentValue: 42, previousValue: 42, isFirstChange: () => false } })
+      expect(a.render).toHaveBeenCalledWith()
+    })
     it('should not call #render if no props have changed', () => {
       let counter = 0
       class A extends NgComponent<Props, {}> {
