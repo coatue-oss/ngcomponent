@@ -21,7 +21,7 @@ abstract class NgComponent<
   // nb: this method is explicity exposed for unit testing
   public $onChanges(changes: object) {
     const oldProps = this.props
-    const newProps = mapValues<{}, Props>(changes, 'currentValue')
+    const newProps = (mapValues as any)(changes, 'currentValue')
 
     const nextProps = assign({}, this.props, newProps)
     // TODO: implement nextState (which also means implement this.setState)
