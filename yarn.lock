@@ -2,27 +2,27 @@
 # yarn lockfile v1
 
 
-"@types/angular-mocks@^1.5.9":
+"@types/angular-mocks@^1.5.11":
   version "1.5.11"
   resolved "https://registry.yarnpkg.com/@types/angular-mocks/-/angular-mocks-1.5.11.tgz#d5bbefbf742f2196071bda0fe051878b6f4fd72c"
   dependencies:
     "@types/angular" "*"
 
-"@types/angular-resource@^1.5.8":
+"@types/angular-resource@^1.5.14":
   version "1.5.14"
   resolved "https://registry.yarnpkg.com/@types/angular-resource/-/angular-resource-1.5.14.tgz#902f34e8c98f708ae99493c6d416b39b4a22d9fe"
   dependencies:
     "@types/angular" "*"
 
-"@types/angular@*", "@types/angular@^1.6.18", "@types/angular@^1.6.32":
+"@types/angular@*", "@types/angular@^1.6.34", "@types/angular@^1.6.39":
   version "1.6.39"
   resolved "https://registry.yarnpkg.com/@types/angular/-/angular-1.6.39.tgz#0c34938fc546f360c14817686f2e453ebf22312f"
 
-"@types/jasmine@^2.6.0":
+"@types/jasmine@^2.8.2":
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.8.2.tgz#6ae4d8740c0da5d5a627df725b4eed71b8e36668"
 
-"@types/lodash@^4.14.76":
+"@types/lodash@^4.14.85":
   version "4.14.85"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.85.tgz#a16fbf942422f6eca5622b6910492c496c35069b"
 
@@ -94,7 +94,7 @@ align-text@^0.1.1, align-text@^0.1.3:
     longest "^1.0.1"
     repeat-string "^1.5.2"
 
-angular-resource@>=1.5.0:
+angular-resource@^1.6.6:
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/angular-resource/-/angular-resource-1.6.6.tgz#430660e969c3e7cf40c5e247e5e690f06d6efc61"
 
@@ -434,7 +434,7 @@ browserify-zlib@^0.2.0, browserify-zlib@~0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserify@^14.0.0, browserify@^14.4.0:
+browserify@^14.0.0, browserify@^14.5.0:
   version "14.5.0"
   resolved "https://registry.yarnpkg.com/browserify/-/browserify-14.5.0.tgz#0bbbce521acd6e4d1d54d8e9365008efb85a9cc5"
   dependencies:
@@ -962,7 +962,7 @@ electron-download@^3.0.1:
     semver "^5.3.0"
     sumchecker "^1.2.0"
 
-electron@^1.7.6:
+electron@^1.7.9:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/electron/-/electron-1.8.1.tgz#19b6f39f2013e204a91a60bc3086dc7a4a07ed88"
   dependencies:
@@ -1841,7 +1841,7 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-karma-browserify@^5.1.1:
+karma-browserify@^5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/karma-browserify/-/karma-browserify-5.1.2.tgz#48016359d722312a3530aa1dbbab7663e022d779"
   dependencies:
@@ -1864,7 +1864,7 @@ karma-jasmine@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/karma-jasmine/-/karma-jasmine-1.1.0.tgz#22e4c06bf9a182e5294d1f705e3733811b810acf"
 
-karma-mocha-reporter@^2.2.4:
+karma-mocha-reporter@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/karma-mocha-reporter/-/karma-mocha-reporter-2.2.5.tgz#15120095e8ed819186e47a0b012f3cd741895560"
   dependencies:
@@ -2215,15 +2215,12 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-ngimport@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/ngimport/-/ngimport-0.7.2.tgz#a21743b5dd5a7056688e4394dc5c14960343eb7d"
+ngimport@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/ngimport/-/ngimport-0.8.0.tgz#55c222a23d102555a649866c5004919f1ea8e408"
   dependencies:
-    "@types/angular" "^1.6.18"
-    "@types/angular-mocks" "^1.5.9"
-    "@types/angular-resource" "^1.5.8"
-    angular ">=1.5.0"
-    angular-resource ">=1.5.0"
+    "@types/angular" "^1.6.34"
+    "@types/angular-resource" "^1.5.14"
 
 node-libs-browser@^2.0.0:
   version "2.1.0"
@@ -3322,7 +3319,7 @@ tslint-no-circular-imports@^0.2.0:
     tslint "^5.7.0"
     typescript "^2.5.2"
 
-tslint@^5.7.0:
+tslint@^5.7.0, tslint@^5.8.0:
   version "5.8.0"
   resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.8.0.tgz#1f49ad5b2e77c76c3af4ddcae552ae4e3612eb13"
   dependencies:
@@ -3369,7 +3366,7 @@ typedarray@^0.0.6, typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.5.2:
+typescript@^2.5.2, typescript@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.1.tgz#ef39cdea27abac0b500242d6726ab90e0c846631"
 
@@ -3467,9 +3464,9 @@ void-elements@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
-wallaby-webpack@0.0.41:
-  version "0.0.41"
-  resolved "https://registry.yarnpkg.com/wallaby-webpack/-/wallaby-webpack-0.0.41.tgz#0c641154701234bc2e54f8310dd60e980d914de6"
+wallaby-webpack@0.0.45:
+  version "0.0.45"
+  resolved "https://registry.yarnpkg.com/wallaby-webpack/-/wallaby-webpack-0.0.45.tgz#ca9b383fe1e011bc86f817e216291fafc307ce83"
   dependencies:
     graceful-fs "^4.1.3"
     lodash "^3.5.0"
@@ -3509,7 +3506,7 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^3.6.0:
+webpack@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.8.1.tgz#b16968a81100abe61608b0153c9159ef8bb2bd83"
   dependencies:

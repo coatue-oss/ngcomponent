@@ -10,10 +10,10 @@
 
 ```sh
 # Using Yarn:
-yarn add ngcomponent
+yarn add ngcomponent angular angular-resource
 
 # Or, using NPM:
-npm install ngcomponent --save
+npm install ngcomponent angular angular-resource --save
 ```
 
 ## Usage
