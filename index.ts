@@ -1,6 +1,11 @@
+import { IChangesObject } from 'angular'
 import assign = require('lodash/assign')
 import mapValues = require('lodash/mapValues')
 import some = require('lodash/some')
+
+type OnChanges<T> = {
+  [K in keyof T]: IChangesObject<T[K]>
+}
 
 abstract class NgComponent<
   Props extends { [k: string]: any } = {},
@@ -19,12 +24,14 @@ abstract class NgComponent<
     }
   */
   // nb: this method is explicity exposed for unit testing
-  public $onChanges(changes: object) {
+  public $onChanges(changes: OnChanges<Partial<Props>>) {
     const oldProps = this.props
-    const newProps = mapValues<{}, Props>(changes, 'currentValue')
 
-    const nextProps = assign({}, this.props, newProps)
+    // TODO: fix Lodash typings upstream
+    const newProps = mapValues(changes, 'currentValue') as Partial<Props>
+
     // TODO: implement nextState (which also means implement this.setState)
+    const nextProps = assign({}, this.props, newProps)
 
     if (this.__isFirstRender) {
       assign(this, { props: nextProps })
@@ -61,8 +68,8 @@ abstract class NgComponent<
   */
   componentWillMount(): void {}
   componentDidMount(): void {}
-  componentWillReceiveProps(_props: Props): void { }
-  shouldComponentUpdate(_nextProps: Props, _nextState: State): boolean { return true }
+  componentWillReceiveProps(_props: Partial<Props>): void { }
+  shouldComponentUpdate(_nextProps: Partial<Props>, _nextState: State): boolean { return true }
   componentWillUpdate(_props: Partial<Props>, _state: State): void {}
   componentDidUpdate(_props: Partial<Props>, _state: State): void {}
   componentWillUnmount() {}
