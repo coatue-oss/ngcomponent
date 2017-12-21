@@ -43,7 +43,7 @@
     "browserify": "^14.5.0",
     "electron": "^1.7.9",
     "jasmine": "^2.8.0",
-    "karma": "^1.7.1",
+    "karma": "^2.0.0",
     "karma-browserify": "^5.1.2",
     "karma-electron-launcher": "^0.2.0",
     "karma-jasmine": "^1.1.0",
