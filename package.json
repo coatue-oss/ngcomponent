@@ -42,7 +42,7 @@
     "angular-resource": "^1.6.6",
     "browserify": "^14.5.0",
     "electron": "^1.7.9",
-    "jasmine": "^2.8.0",
+    "jasmine": "^3.0.0",
     "karma": "^1.7.1",
     "karma-browserify": "^5.1.2",
     "karma-electron-launcher": "^0.2.0",
